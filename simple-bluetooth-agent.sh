@@ -2,7 +2,7 @@
 
 hciconfig hci0 reset
 hciconfig hci0 up
-hciconfig hci0 name $NAME
+hciconfig hci0 name ${NAME}
 hciconfig hci0 piscan
 
 expect -c '
@@ -34,7 +34,7 @@ expect -c '
     {
        expect \
        {
-           "Confirm passkey"         { send "yes\r" }  
+           "Confirm passkey"         { send "yes\r" }
            "Authorize service"       { send "yes\r" }
            eof {puts "\rBreaking - EOF\r" ; break}
        }

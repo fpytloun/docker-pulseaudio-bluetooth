@@ -1,4 +1,9 @@
-#!/bin/bash
+#!/bin/bash -e
+
+export NAME=${NAME:-$HOSTNAME}
+export DEVICE=${DEVICE:-$(hciconfig dev|grep 'BD Address:'|awk '{print $3}')}
+export DEVICE_PIN=${DEVICE_PIN:-0000}
+
 rm -f /run/dbus/pid
 rm -rf /tmp/pulse-*
 
@@ -9,6 +14,6 @@ eval "$(dbus-launch)"
 export DBUS_SESSION_BUS_ADDRESS
 export DBUS_SESSION_BUS_PID
 pulseaudio --log-level=1 &
-/usr/lib/bluetooth/bluetoothd --plugin=a2dp -n &
+bluetoothd --plugin=a2dp -n &
 #avahi-daemon -D
-. /bin/simple-bluetooth-agent.sh
+. /usr/local/bin/simple-bluetooth-agent.sh
